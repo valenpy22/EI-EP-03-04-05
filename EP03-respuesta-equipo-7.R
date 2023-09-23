@@ -1,4 +1,6 @@
 
+library(pwr)
+
 #2.Si el verdadero volumen medio de los bidones fuera de 10,1 litros, ¿cuál sería 
 #la probabilidad de que el ingeniero, que obviamente no conoce este dato, cometa 
 #un error de tipo II? Para responder, agregue al gráfico anterior la verdadera 
@@ -49,6 +51,21 @@
 #en este caso un valor de 0.01, debido a que se ve la diferencia entre los valores entregados
 #y la media, dando 0.02. Pero como se trata de una prueba bilateral, este valor debe dividirse por 2,
 #dando como resultado 0.01.
+
+#z1: (9.8 - 10)/1 = -0.2
+#z1: (10.2 - 10)/1 = 0.2
+
+inferior <- 9.8
+superior <- 10.2
+media <- 10
+sd <- 1
+n <- 100
+
+z1 <- (inferior - media)/sd
+z2 <- (superior - media)/sd
+
+#Probabilidad de error tipo I
+#I = P(Z < -0.2) + P(Z > 0.2)
 
 library(ggpubr)
 library(pwr)
