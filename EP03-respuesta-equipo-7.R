@@ -15,28 +15,28 @@
 #gráfico, calcular el área correspondiente. Tome como ejemplo los scripts 
 #presentados en la lectura sobre poder estadístico.
 
-#Hipótesis:
-#H0: La máquina llena en promedio 10 litros en cada envase.
-#Ha: La máquina llena en promedio una cantidad distinta de 10 litros por envase.
+# Hipótesis:
+# H0: La máquina llena en promedio 10 litros en cada envase.
+# Ha: La máquina llena en promedio una cantidad distinta de 10 litros por envase.
 
-#Ho: mu = mu0, es decir, mu = 10 [L].
-#Ha: mu != mu0, es decir, mu != 10 [L].
+# Ho: mu = mu0, es decir, mu = 10 [L].
+# Ha: mu != mu0, es decir, mu != 10 [L].
 
 library(pwr)
 library(ggpubr)
 library(tidyverse)
 library(ggplot2)
 
-#Datos
+# Datos
 mu0 <- 10     # hipotesis nula
 sigma <- 1    # desviación estandar
 n <- 100      # tamaño de la muestra
 alfa <- 0.05  # nivel de significancia
 
-#Calcular error estándar
+# Calcular error estándar
 se <- sigma/sqrt(n) # = 0.1
 
-#Graficar la distribución muestral de la media de las muestras
+# Graficar la distribución muestral de la media de las muestras
 x <- seq(90 * se, 110 * se, 0.01)
 y <- dnorm(x, mean= mu0, sd = se)
 
@@ -83,7 +83,8 @@ area_derecha <- integrate(function(x) dnorm(x, mean = mu0, sd = se),
 # Calcular el área total sombreada
 alfa <- (area_izquierda + area_derecha)*100 # = 4,550026
 
-#La probabilidad de que cometa un error de tipo I es del 4,55%
+# La probabilidad de que cometa un error de tipo I es 4,55%
+
 
 #2.Si el verdadero volumen medio de los bidones fuera de 10,1 litros, ¿cuál sería 
 #la probabilidad de que el ingeniero, que obviamente no conoce este dato, cometa 
@@ -93,7 +94,7 @@ alfa <- (area_izquierda + area_derecha)*100 # = 4,550026
 #gráfico, calcular el área correspondiente. También hay ejemplos de este 
 #procedimiento en la lectura sobre poder estadístico.
 
-# Superponer la distribución muestral de la media de las diferencias si la diferencia de medias fuera 10.1
+# Superponer la distribución muestral de la media de las diferencias si la diferencia de medias fuera 10,1
 media_efecto <- 10.1
 g <- g + stat_function(fun = dnorm,
                        args = list(mean = media_efecto, sd = se),
@@ -115,7 +116,7 @@ g <- g + geom_area(data = subset(data.frame(x1, y1), x1 > q_critico_superior),  
 
 print(g)
 
-#Calcular el poder de acuerdo al análisis teórico
+# Calcular el poder de acuerdo al análisis teórico
 poder <- pnorm(q_critico_inferior,
                mean = media_efecto,
                sd = se,
@@ -126,10 +127,11 @@ poder <- pnorm(q_critico_inferior,
                lower.tail = FALSE)
 
 
-#Calcular la probabilidad de cometer un error de tipo II
+# Calcular la probabilidad de cometer un error de tipo II
 beta <- (1 - poder)*100 # = 0,8399948
 
 # La probabilidad de cometer un error tipo II es 84%
+
 
 #3.Como no se conoce el verdadero volumen medio, genere un gráfico del poder 
 #estadístico con las condiciones anteriores, pero suponiendo que el verdadero 
@@ -145,20 +147,20 @@ n100_alpha0455 = power.t.test(n = 100,
                               type = "one.sample",
                               alternative = "two.sided")$power
                               
-#Construir matriz de datos en formato ancho
+# Construir matriz de datos en formato ancho
 datos <- data.frame(efecto, n100_alpha0455)
 
 # Llevar a formato largo
 datos <- datos %>% pivot_longer(!"efecto", names_to = "fuente", values_to = "poder")
 
-#Formatear fuente como variable categórica
+# Formatear fuente como variable categórica
 niveles <- c("n100_alpha0455")
 
 etiquetas <- c("n = 100, alfa = 0.0455")
 
 datos[["fuente"]] <- factor(datos[["fuente"]], levels = niveles, labels = etiquetas)
 
-#Graficar la curva de poder
+# Graficar la curva de poder
 g <- ggplot(datos, aes(efecto, poder, colour = factor(fuente)))
 g <- g + geom_line()
 g <- g + labs(colour = "")
@@ -213,4 +215,4 @@ n_new <- ceiling(resultado[["n"]])
 
 print(n_new) #2 
 
-#El tamaño de la muestra debe ser más grande para tener esa precisión.
+# El tamaño de la muestra debe ser más grande para tener esa precisión.
