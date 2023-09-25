@@ -130,7 +130,7 @@ poder <- pnorm(q_critico_inferior,
 # Calcular la probabilidad de cometer un error de tipo II
 beta <- (1 - poder)*100 # = 0,8399948
 
-# La probabilidad de cometer un error tipo II es 84%
+# La probabilidad de cometer un error tipo II es 84%, dada por el área bajo las curvas sin pintar.
 
 
 #3.Como no se conoce el verdadero volumen medio, genere un gráfico del poder 
@@ -180,7 +180,7 @@ print(g)
 
 poder <- 0.7
 alpha <- 0.05
-diferencia <- 0.0000001 #Diferencia entre la media real y la hipotética
+diferencia <- 10.1 - mu0 #Diferencia entre la media real y la hipotética
 
 resultado <- power.t.test(n = NULL,
                         delta = diferencia,
@@ -194,6 +194,7 @@ n_new <- ceiling(resultado[["n"]])
 
 print(n_new) # = 2 
 
+# Teniendo que la verdadera media es 10.1 (indicada en la pregunta 2) se tiene lo siguiente:
 # Para conseguir un poder estadístico de 0,7 y un nivel de significación de 0,05 se necesitarian X bidones
 
 #5.¿Y si el ingeniero fuese muy exigente y quisiera reducir la probabilidad de 
@@ -201,7 +202,7 @@ print(n_new) # = 2
 
 poder <- 0.7
 alpha_2 <- 0.01
-diferencia <- 0.0000001 #Diferencia entre la media real y la hipotética
+diferencia <- 10.1 - mu0 #Diferencia entre la media real y la hipotética
 
 resultado <- power.t.test(n = NULL,
                         delta = diferencia,
@@ -215,4 +216,5 @@ n_new <- ceiling(resultado[["n"]])
 
 print(n_new) #2 
 
+# Teniendo que la verdadera media es 10.1 (indicada en la pregunta 2) se tiene lo siguiente:
 # El tamaño de la muestra debe ser más grande para tener esa precisión.
