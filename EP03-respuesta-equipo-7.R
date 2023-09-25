@@ -138,7 +138,7 @@ beta <- (1 - poder)*100 # = 0,8399948
 #volumen medio podría variar de 9,6 a 10,4 litros. Hay un ejemplo de este tipo 
 #de gráfico en la lectura sobre poder estadístico.
 
-efecto <- seq(0, 20, 0.01)
+efecto <- seq(0, 1, 0.01)
 
 n100_alpha0455 = power.t.test(n = 100,
                               delta = efecto,
@@ -169,11 +169,13 @@ g <- g + xlab("Tamaño del efecto")
 g <- g + scale_color_manual(values = c("red"))
 g <- g + theme_pubr()
 g <- g + ggtitle("Curvas de poder para prueba t bilateral")
-g <- g + geom_vline(xintercept = 9.6, linetype = "dashed")
-g <- g + geom_vline(xintercept = 10.4, linetype = "dashed")
+g <- g + geom_vline(xintercept = mu0 - 9.6, linetype = "dashed")
 g <- g + ylim(0, 1)
-g <- g + xlim(0, 11)
+g <- g + xlim(0, 1)
 print(g)
+print(n100_alpha0455[40])
+
+#Se tiene que el tamaño del efecto es 0.4 y que su poder es del 96,85%
 
 #4.Considerando un volumen medio de 10 litros, ¿cuántos bidones deberían 
 #revisarse para conseguir un poder estadístico de 0,7 y un nivel de significación de 0,05
