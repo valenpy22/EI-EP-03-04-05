@@ -192,10 +192,10 @@ resultado <- power.t.test(n = NULL,
 
 n_new <- ceiling(resultado[["n"]])
 
-print(n_new) # = 2 
+print(n_new)
 
 # Teniendo que la verdadera media es 10.1 (indicada en la pregunta 2) se tiene lo siguiente:
-# Para conseguir un poder estadístico de 0,7 y un nivel de significación de 0,05 se necesitarian X bidones
+# Para conseguir un poder estadístico de 0,7 y un nivel de significación de 0,05 se necesitarían 620 bidones
 
 #5.¿Y si el ingeniero fuese muy exigente y quisiera reducir la probabilidad de 
 #cometer un error de tipo I a un 1% solamente?
@@ -214,7 +214,7 @@ resultado <- power.t.test(n = NULL,
 
 n_new <- ceiling(resultado[["n"]])
 
-print(n_new) #2 
+print(n_new)
 
 # Teniendo que la verdadera media es 10.1 (indicada en la pregunta 2) se tiene lo siguiente:
-# El tamaño de la muestra debe ser más grande para tener esa precisión.
+# Para conseguir un poder estadístico de 0,7 y un nivel de significación de 0,01 se necesitarían 965 bidones.
