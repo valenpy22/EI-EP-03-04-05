@@ -58,14 +58,11 @@ set.seed(555)
 
 excel <- read_excel("EP04 Datos.xls")
 muestra <- excel[sample(x = nrow(excel), size =50),] # muestra de 50 alumnos elegidos al azar
-#print(muestra)
 
 calculo <- muestra$Calculo
 fisica <- muestra$Fisica
 algebra <- muestra$Algebra
-#print(c)
 
-#print("")
 calculo <- ifelse(calculo=="R",0,1)
 fisica <- ifelse(fisica=="R",0,1)
 algebra <- ifelse(algebra=="R",0,1)
@@ -78,4 +75,7 @@ datos <- datos %>% pivot_longer(c('calculo','fisica','algebra'),names_to="estudi
 datos[["instancia"]] <- factor(datos[["instancia"]])
 datos[["estudiantes"]] <- factor(datos[["estudiantes"]])
 
-prueba <- cochran.qtest(resltado ~ estudiantes | instancia, data=datos,alpha=0.05)
+prueba <- cochran.qtest(resultado ~ estudiantes | instancia, data=datos,alpha=0.05)
+
+# Con un p-value de 0.11 > alfa = 0.05 se acepta la hipótesis nula de que no hay
+# diferncia significativa entre los grupos
