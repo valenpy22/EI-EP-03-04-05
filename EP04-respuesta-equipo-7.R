@@ -77,5 +77,5 @@ datos[["estudiantes"]] <- factor(datos[["estudiantes"]])
 
 prueba <- cochran.qtest(resultado ~ estudiantes | instancia, data=datos,alpha=0.05)
 
-# Con un p-value de 0.11 > alfa = 0.05 se acepta la hipótesis nula de que no hay
-# diferncia significativa entre los grupos
+# Con un p-value de 0,11 y un alfa de 0,05 fallamos en rechazar la hipótesis nula
+# de que no hay diferencia significativa entre estudiantes.
