@@ -44,3 +44,38 @@ print(prueba)
 # creer que existe una diferencia de niveles de ansiedad
 # antes y después de que los estudiantes participaran en el
 # programa de bienvenida.
+
+# 4.La Facultad de Ingeniería desea saber si existe diferencia significativa en el desempeño de los estudiantes 
+# en asignaturas críticas de primer semestre. Para ello, le ha entregado un archivo de datos que, para 3 asignaturas, 
+# indica si una muestra de 50 estudiantes aprobó o reprobó. ¿Qué puede concluir la Facultad? Indicación: 
+# obtenga la muestra a partir del archivo “EP04 Datos.csv” que se encuentra en el directorio compartido, 
+# usando la semilla 555. Considere un nivel de significación α=0,05.
+library(tidyverse)
+library(readxl)
+library(RVAideMemoire)
+library(rcompanion)
+set.seed(555)
+
+excel <- read_excel("EP04 Datos.xls")
+muestra <- excel[sample(x = nrow(excel), size =50),] # muestra de 50 alumnos elegidos al azar
+#print(muestra)
+
+calculo <- muestra$Calculo
+fisica <- muestra$Fisica
+algebra <- muestra$Algebra
+#print(c)
+
+#print("")
+calculo <- ifelse(calculo=="R",0,1)
+fisica <- ifelse(fisica=="R",0,1)
+algebra <- ifelse(algebra=="R",0,1)
+
+instancia <- 1:50
+
+datos <- data.frame(instancia,calculo,fisica,algebra)
+datos <- datos %>% pivot_longer(c('calculo','fisica','algebra'),names_to="estudiantes",values_to="resultado")
+
+datos[["instancia"]] <- factor(datos[["instancia"]])
+datos[["estudiantes"]] <- factor(datos[["estudiantes"]])
+
+prueba <- cochran.qtest(resltado ~ estudiantes | instancia, data=datos,alpha=0.05)
