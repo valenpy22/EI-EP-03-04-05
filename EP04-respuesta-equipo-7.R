@@ -1,3 +1,51 @@
+# 1. En su desquiciada investigación para acabar con los vampiros, Van Helsing ha descubierto que sus
+# enemigos tienen predilección por la sangre humana tipo AII+. El cazador sospecha que estos monstruos
+# tienen preferencia por la sangre de los adultos, pero aún no está convencido. Por esta razón, mediante
+# artimañas, ha encerrado a 14 niños y 20 adultos con este tipo de sangre en un reducto de vampiros. Tras
+# 3 noches, 4 de los niños y 11 de los adultos fueron atacados. ¿Existe relación entre el ataque de vampiros
+# y la edad de la víctima?
+
+# Variables:
+# Mayoría De edad: dicotómica (mayor_de_edad, menor_de_edad)
+# Mordida: dicotómica (mordido, no_mordido)
+
+# Se hace uso del test de fisher ya que se trata de una prueba no paramétrica, 
+# y se considera que las variables son independientes.
+# Además de que las variables son dicotómicas y se trata de una muestra pequeña, 
+# el valor de las frecuencias esperadas de chi cuadradro es equivalente a 6 -lo que es
+# cercano a 5- en uno de los cuadrantes de la tabla, y como se busca realizar una prueba rigurosa
+# se determina realizar un test de fisher.
+
+# datos
+no_mordido <- c(10,9)
+mordido <- c(4,11)
+tabla <- as.table (rbind (no_mordido,mordido))
+
+# chi-square
+prueba = chisq.test(tabla)
+esperados = prueba[["expected"]]
+print(esperados)
+
+# Primeramente se postulan las hipotesis nula y alternativa:
+# H0: No existe relación entre la edad de la víctima y el ataque de vampiros.
+# Ha: Existe relación entre la edad de la víctima y el ataque de vampiros.
+# Se considera un nivel de significación alfa = 0.05.
+
+dimnames (tabla) <- list (
+  Mordedura = c("No Mordido", "Mordido"),
+  Mayoría_de_edad= c("Niño", "Adulto"))
+
+Mordedura = c("No Mordido", "Mordido")
+
+
+prueba <- fisher.test (tabla, 1-alfa)
+print(prueba)
+
+# Como p-value = 0.17
+# se falla al rechazar la hipótesis nula y se concluye que no hay evidencia suficiente 
+# para creer que existe una relación entre la edad de la víctima y el ataque de vampiros.
+
+
 
 # 2. Una Universidad ha detectado que muchos de sus nuevos estudiantes ingresan 
 # con elevados niveles de ansiedad. Para ello, han decidido evaluar un nuevo 
@@ -18,7 +66,7 @@
 # mismos sujetos, queriendo ver si se produce un cambio significativo entre ambas
 # mediciones.
 
-# Ho: No hay cambios significativos en las respuestas
+# H0: No hay cambios significativos en las respuestas
 # Ha: Sí hay cambios significativos en las respuestas
 
 
@@ -49,6 +97,48 @@ print(prueba)
 # antes y después de que los estudiantes participaran en el
 # programa de bienvenida.
 
+
+
+# 3. En noviembre de 2019, se realizó un estudio acerca de la aprobación al presidente Sebastián Piñera entre
+# 440 profesores y estudiantes de una prestigiosa universidad, obteniéndose los resultados que se muestran
+# en la tabla. ¿Son similares las opiniones de ambos segmentos de la comunidad universitaria?  
+
+# Primeramente se determina el valor de las frecuencias esperadas.
+# En base al análisis de las frecuencias esperados se determina que se puede utilizar el test de chi cuadrado,
+# ya que este valor es mayor a 5 en todos los cuadrantes de la tabla.
+# Por lo tanto es posible realizar el test de proporciones, no paramétrico de chi cuadrado.
+
+# Hipótesis nula y alternativa:
+
+# H0: Profesores y estudiantes presentan la misma preferencia.
+# H1: Profesores y estudiantes no presentan la misma preferencia.
+
+# Se considera un nivel de significación de 0.05.
+
+
+# datos
+esperados <- round(prueba[["expected"]] ,3)  
+
+estudiantes <- c(35,208,17)
+profesores <- c(20,157,3)
+
+tabla <- as.table(rbind(estudiantes, profesores))  
+print(tabla)
+
+dimnames(tabla) <- list(rol= c("Estudiantes", "Profesores"), opciones = c("Aprueba", "Desaprueba", "Ninguna"))
+
+# prueba chi cuadrado
+prueba = chisq.test(tabla)
+print(prueba)
+
+
+# Como p-value = 0.03521
+# Se rechaza la hipótesis nula y se concluye que hay evidencia
+# suficiente para creer que existe una diferencia en la preferencia de
+# ambos segmentos de la comunidad universitaria.
+
+
+
 # 4.La Facultad de Ingeniería desea saber si existe diferencia significativa en el desempeño de los estudiantes 
 # en asignaturas críticas de primer semestre. Para ello, le ha entregado un archivo de datos que, para 3 asignaturas, 
 # indica si una muestra de 50 estudiantes aprobó o reprobó. ¿Qué puede concluir la Facultad? Indicación: 
@@ -58,7 +148,7 @@ print(prueba)
 # Debido a que la variable independiente (cada alumno) tiene más de 2 observaciones
 # pareadas (3 asignaturas) se utilizará la prueba Q de Cochran
 
-# Ho: No hay diferencia significativa en el desempeño de los estudiantes
+# H0: No hay diferencia significativa en el desempeño de los estudiantes
 # Ha: Sí hay diferencia significativa en el desempeño de los estudiantes
 
 # librerías y semilla
