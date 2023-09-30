@@ -1,9 +1,9 @@
 
 # 2. Una Universidad ha detectado que muchos de sus nuevos estudiantes ingresan 
-#con elevados niveles de ansiedad. Para ello, han decidido evaluar un nuevo 
+# con elevados niveles de ansiedad. Para ello, han decidido evaluar un nuevo 
 # programa de bienvenida que busca facilitar la adaptación a la vida universitaria. 
 # Para ello, han reclutado a un grupo de 15 voluntarios a quienes se les
-#midió el nivel de ansiedad (alto o bajo) antes y después de participar en el 
+# midió el nivel de ansiedad (alto o bajo) antes y después de participar en el 
 # programa de bienvenida:
 # - 2 estudiantes no presentaron ansiedad ni antes ni después.
 # - 9 estudiantes inicialmente ansiosos dejaron de estarlo.
@@ -18,8 +18,11 @@
 # mismos sujetos, queriendo ver si se produce un cambio significativo entre ambas
 # mediciones.
 
-# Ho: NO hay cambios significativos en las respuestas
-# Ha: SÍ hay cambios significativos en las respuestas
+# Ho: No hay cambios significativos en las respuestas
+# Ha: Sí hay cambios significativos en las respuestas
+
+
+# Tabla de referencia:
 
 #           modelo_1
 #           Alta Baja
@@ -37,8 +40,9 @@ print(tabla)
 # Aplicar prueba de mcNemar
 prueba <- mcnemar.test(tabla)
 print(prueba)
-# Teniendo como alfa = 0.05 y p como 0.02686, como p < alfa,
-# Se rechaza la hipótesis nula en favor de 
+
+# Teniendo alfa = 0.05 y p = 0.02686, al ser p < alfa
+# se rechaza la hipótesis nula en favor de 
 # la hipótesis alternativa con un 95% de confianza. 
 # Por lo tanto, se concluye que hay evidencia suficiente para 
 # creer que existe una diferencia de niveles de ansiedad
@@ -50,12 +54,21 @@ print(prueba)
 # indica si una muestra de 50 estudiantes aprobó o reprobó. ¿Qué puede concluir la Facultad? Indicación: 
 # obtenga la muestra a partir del archivo “EP04 Datos.csv” que se encuentra en el directorio compartido, 
 # usando la semilla 555. Considere un nivel de significación α=0,05.
+
+# Debido a que la variable independiente (cada alumno) tiene más de 2 observaciones
+# pareadas (3 asignaturas) se utilizará la prueba Q de Cochran
+
+# Ho: No hay diferencia significativa en el desempeño de los estudiantes
+# Ha: Sí hay diferencia significativa en el desempeño de los estudiantes
+
+# librerías y semilla
 library(tidyverse)
 library(readxl)
 library(RVAideMemoire)
 library(rcompanion)
 set.seed(555)
 
+# obtener datos
 excel <- read_excel("EP04 Datos.xls")
 muestra <- excel[sample(x = nrow(excel), size =50),] # muestra de 50 alumnos elegidos al azar
 
@@ -75,7 +88,9 @@ datos <- datos %>% pivot_longer(c('calculo','fisica','algebra'),names_to="estudi
 datos[["instancia"]] <- factor(datos[["instancia"]])
 datos[["estudiantes"]] <- factor(datos[["estudiantes"]])
 
-prueba <- cochran.qtest(resultado ~ estudiantes | instancia, data=datos,alpha=0.05)
+# prueba Q de Cochran
+prueba <- cochran.qtest(resultado ~ estudiantes | instancia, data=datos, alpha=0.05)
+print(prueba)
 
-# Con un p-value de 0,11 y un alfa de 0,05 fallamos en rechazar la hipótesis nula
+# Con un p-value de 0,11 mayor a alfa de 0,05 se falla en rechazar la hipótesis nula
 # de que no hay diferencia significativa entre estudiantes.
