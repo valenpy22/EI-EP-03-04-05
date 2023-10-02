@@ -10,7 +10,9 @@
 # Mordida: dicotómica (mordido, no_mordido)
 
 # Se hace uso del test de fisher ya que se trata de una prueba no paramétrica, 
-# y se considera que las variables son independientes.
+# y se considera que las variables son independientes. Se asume la independencia
+# de los datos debido a que el tamaño de la muestra es menor al 10% de la población
+# de niños y adultos.
 # Además de que las variables son dicotómicas y se trata de una muestra pequeña, 
 # el valor de las frecuencias esperadas de chi cuadradro es equivalente a 6 -lo que es
 # cercano a 5- en uno de los cuadrantes de la tabla, y como se busca realizar una prueba rigurosa
@@ -26,14 +28,14 @@ prueba = chisq.test(tabla)
 esperados = prueba[["expected"]]
 print(esperados)
 
-# Primeramente se postulan las hipotesis nula y alternativa:
+# Primeramente se postulan las hipótesis nula y alternativa:
 # H0: No existe relación entre la edad de la víctima y el ataque de vampiros.
 # Ha: Existe relación entre la edad de la víctima y el ataque de vampiros.
 # Se considera un nivel de significación alfa = 0.05.
 
 dimnames (tabla) <- list (
   Mordedura = c("No Mordido", "Mordido"),
-  Mayoría_de_edad= c("Niño", "Adulto"))
+  Mayoria_de_edad= c("Niño", "Adulto"))
 
 Mordedura = c("No Mordido", "Mordido")
 
@@ -44,7 +46,6 @@ print(prueba)
 # Como p-value = 0.17
 # se falla al rechazar la hipótesis nula y se concluye que no hay evidencia suficiente 
 # para creer que existe una relación entre la edad de la víctima y el ataque de vampiros.
-
 
 
 # 2. Una Universidad ha detectado que muchos de sus nuevos estudiantes ingresan 
@@ -60,7 +61,6 @@ print(prueba)
 
 # ¿Qué se puede concluir acerca del nuevo programa de bienvenida?
  
-
 # Se empleará la prueba de mcNemar, debido a que la muestra es pequeña
 # y se mide en dos ocasiones diferentes cierta respuesta dicotómica para los
 # mismos sujetos, queriendo ver si se produce un cambio significativo entre ambas
@@ -98,18 +98,17 @@ print(prueba)
 # programa de bienvenida.
 
 
-
 # 3. En noviembre de 2019, se realizó un estudio acerca de la aprobación al presidente Sebastián Piñera entre
 # 440 profesores y estudiantes de una prestigiosa universidad, obteniéndose los resultados que se muestran
 # en la tabla. ¿Son similares las opiniones de ambos segmentos de la comunidad universitaria?  
 
 # Primeramente se determina el valor de las frecuencias esperadas.
 # En base al análisis de las frecuencias esperados se determina que se puede utilizar el test de chi cuadrado,
-# ya que este valor es mayor a 5 en todos los cuadrantes de la tabla.
-# Por lo tanto es posible realizar el test de proporciones, no paramétrico de chi cuadrado.
+# ya que se cumple la condición de que este valor es mayor a 5 en todos los cuadrantes de la tabla y 
+# además se está realizando una prueba de homogeneidad para determinar si dos poblaciones tienen la 
+# misma proporción de aprobación del presidente Sebastián Piñera.
 
 # Hipótesis nula y alternativa:
-
 # H0: Profesores y estudiantes presentan la misma preferencia.
 # H1: Profesores y estudiantes no presentan la misma preferencia.
 
@@ -117,7 +116,7 @@ print(prueba)
 
 
 # datos
-esperados <- round(prueba[["expected"]] ,3)  
+esperados <- round(prueba[["expected"]], 3)  
 
 estudiantes <- c(35,208,17)
 profesores <- c(20,157,3)
@@ -131,12 +130,10 @@ dimnames(tabla) <- list(rol= c("Estudiantes", "Profesores"), opciones = c("Aprue
 prueba = chisq.test(tabla)
 print(prueba)
 
-
 # Como p-value = 0.03521
-# Se rechaza la hipótesis nula y se concluye que hay evidencia
+# Se rechaza la hipótesis nula en favor de la hipótesis alternativa y se concluye que hay evidencia
 # suficiente para creer que existe una diferencia en la preferencia de
 # ambos segmentos de la comunidad universitaria.
-
 
 
 # 4.La Facultad de Ingeniería desea saber si existe diferencia significativa en el desempeño de los estudiantes 
@@ -182,5 +179,7 @@ datos[["estudiantes"]] <- factor(datos[["estudiantes"]])
 prueba <- cochran.qtest(resultado ~ estudiantes | instancia, data=datos, alpha=0.05)
 print(prueba)
 
-# Con un p-value de 0,11 mayor a alfa de 0,05 se falla en rechazar la hipótesis nula
+# Con un p-value = 0,11 mayor a alfa de 0,05 se falla en rechazar la hipótesis nula
 # de que no hay diferencia significativa entre estudiantes.
+# Por lo tanto, no hay evidencia suficiente para decir que sí hay diferencia significativa 
+# en el desempeño de los estudiantes.
