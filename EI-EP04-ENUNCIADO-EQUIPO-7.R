@@ -60,7 +60,10 @@ print(prueba)
 # - El estudiante restante desarrolló síntomas de ansiedad tras participar en el programa.
 
 # ¿Qué se puede concluir acerca del nuevo programa de bienvenida?
- 
+
+# Variables:
+# Nivel de ansiedad: Dicotómica (Alta o baja)
+
 # Se empleará la prueba de mcNemar, debido a que la muestra es pequeña
 # y se mide en dos ocasiones diferentes cierta respuesta dicotómica para los
 # mismos sujetos, queriendo ver si se produce un cambio significativo entre ambas
@@ -68,7 +71,6 @@ print(prueba)
 
 # H0: No hay cambios significativos en las respuestas
 # Ha: Sí hay cambios significativos en las respuestas
-
 
 # Tabla de referencia:
 
@@ -102,18 +104,19 @@ print(prueba)
 # 440 profesores y estudiantes de una prestigiosa universidad, obteniéndose los resultados que se muestran
 # en la tabla. ¿Son similares las opiniones de ambos segmentos de la comunidad universitaria?  
 
-# Primeramente se determina el valor de las frecuencias esperadas.
-# En base al análisis de las frecuencias esperados se determina que se puede utilizar el test de chi cuadrado,
-# ya que se cumple la condición de que este valor es mayor a 5 en todos los cuadrantes de la tabla y 
-# además se está realizando una prueba de homogeneidad para determinar si dos poblaciones tienen la 
-# misma proporción de aprobación del presidente Sebastián Piñera.
+# Variables:
+# Elección: Categórica (Apruebo, rechazo o nulo)
+# Tipo de funcionario: Categórica (Profesores y estudiantes)
+
+# Se decide usar el test de chi cuadrado, ya que se determina que las frecuencias esperadas son mayores
+# a 5 en todos los cuadrantes de la tabla y además se está realizando una prueba de homogeneidad 
+# para determinar si dos poblaciones tienen la misma proporción de aprobación del presidente Sebastián Piñera.
 
 # Hipótesis nula y alternativa:
 # H0: Profesores y estudiantes presentan la misma preferencia.
 # H1: Profesores y estudiantes no presentan la misma preferencia.
 
 # Se considera un nivel de significación de 0.05.
-
 
 # datos
 esperados <- round(prueba[["expected"]], 3)  
@@ -142,11 +145,15 @@ print(prueba)
 # obtenga la muestra a partir del archivo “EP04 Datos.csv” que se encuentra en el directorio compartido, 
 # usando la semilla 555. Considere un nivel de significación α=0,05.
 
-# Debido a que la variable independiente (cada alumno) tiene más de 2 observaciones
-# pareadas (3 asignaturas) se utilizará la prueba Q de Cochran
+# Variables:
+# Asignatura: Categórica (Pareada de 3 niveles)
+# Aprobación: Dicotómica (Aprobada o reprobada)
 
-# H0: No hay diferencia significativa en el desempeño de los estudiantes
-# Ha: Sí hay diferencia significativa en el desempeño de los estudiantes
+# Se escoge la prueba Q de Cochran, debido a que cada alumno  tiene más de 2 observaciones 
+# pareadas (3 asignaturas) 
+
+# H0: No hay diferencia significativa en el desempeño de los estudiantes entre asignaturas
+# Ha: Sí hay diferencia significativa en el desempeño de los estudiantes entre asignaturas
 
 # librerías y semilla
 library(tidyverse)
@@ -180,6 +187,6 @@ prueba <- cochran.qtest(resultado ~ estudiantes | instancia, data=datos, alpha=0
 print(prueba)
 
 # Con un p-value = 0,11 mayor a alfa de 0,05 se falla en rechazar la hipótesis nula
-# de que no hay diferencia significativa entre estudiantes.
+# de que no hay diferencia significativa entre aprobación de asignaturas.
 # Por lo tanto, no hay evidencia suficiente para decir que sí hay diferencia significativa 
-# en el desempeño de los estudiantes.
+# en el desempeño de los estudiantes entre asignaturas.
