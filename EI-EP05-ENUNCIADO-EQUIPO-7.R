@@ -34,7 +34,7 @@ lapply(libraries, function(package) {
 })
 
 # Se importan los datos
-data <- read.csv("Desktop/EP03/EP05 Datos.csv")
+data <- read.csv("EP05 Datos.csv")
 
 # Formulación de hipótesis
 # H0: No hay diferencias entre las medias de los grupos.
@@ -100,7 +100,7 @@ ratio <- max_var / min_var
 print(ratio)
 
 # Se puede ver que el ratio es menor a 1.5 (1.177047), por lo que se acepta la hipótesis
-# nula y se puede proceder a realizar la prueba ANOVA.s
+# nula y se puede proceder a realizar la prueba ANOVA
 anova <- aov(tiempo ~ area, data = datos)
 
 # Se imprime el resumen de la prueba
@@ -113,9 +113,9 @@ print(summary(anova))
 
 alfa = 0.025
 
-# Se escoge la prueba HSD de Tukey debido a que es más poderosa que los factores
-# de corrección de Bonferroni y Holm, y además no es tan conservadora como la
-# prueba de Scheffé.
+# Para el procedimiento POST-HOC Se escoge la prueba HSD de Tukey 
+# debido a que es más poderosa que los factores de corrección de Bonferroni y Holm,
+# y además no es tan conservadora como la prueba de Scheffé.
 post_hoc <- TukeyHSD(anova,
                      "area",
                      ordered = TRUE,
